@@ -1,6 +1,6 @@
 package com.tao.thehotness_corutines.di
 
-import com.tao.thehotness_corutines.android.HotnessActivity
+import com.tao.thehotness_corutines.android.view.HotnessActivity
 import com.tao.thehotness_corutines.di.modules.activity.ActivityModule
 import dagger.Subcomponent
 

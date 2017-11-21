@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -17,18 +18,19 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @JvmStatic @Provides @Singleton
+    fun moshi(): Moshi = Moshi.Builder().build()
+
+    @JvmStatic @Provides
     fun loggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor()
-
-        loggingInterceptor.level = when {
-            BuildConfig.DEBUG -> HttpLoggingInterceptor.Level.BODY
-            else -> HttpLoggingInterceptor.Level.NONE
+        return HttpLoggingInterceptor().apply {
+            level = when {
+                BuildConfig.DEBUG -> HttpLoggingInterceptor.Level.BODY
+                else -> HttpLoggingInterceptor.Level.NONE
+            }
         }
-
-        return loggingInterceptor
     }
 
-    @JvmStatic @Provides @Singleton
+    @JvmStatic @Provides
     fun headerInterceptor(): Interceptor {
         return Interceptor { chain ->
             val request = chain.request()
@@ -46,6 +48,8 @@ object NetworkModule {
         return OkHttpClient.Builder()
                             .addInterceptor(loggingInterceptor)
                             .addInterceptor(headerInterceptor)
+                            .connectTimeout(5, TimeUnit.SECONDS)
+                            .readTimeout(5, TimeUnit.SECONDS)
                             .build()
     }
 
@@ -59,6 +63,6 @@ object NetworkModule {
     }
 
     @JvmStatic @Provides @Singleton
-    fun service(retrofit: Retrofit) = retrofit.create(BGGService::class.java)
+    fun service(retrofit: Retrofit): BGGService = retrofit.create(BGGService::class.java)
 
 }

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tao.thehotness_corutines.R
 import com.tao.thehotness_corutines.di.ActivityScope
-import com.tao.thehotness_corutines.domain.GameOverview
+import com.tao.thehotness_corutines.domain.entities.GameOverview
 import kotlinx.android.synthetic.main.list_item_game.view.*
 import javax.inject.Inject
 
@@ -20,17 +20,15 @@ class HotnessAdapter
             notifyDataSetChanged() // TODO: Replace with DiffUtil
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
-        return GameViewHolder(parent)
-    }
+    var clickListener: (GameOverview) -> Unit = {}
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder = GameViewHolder(parent)
 
     override fun onBindViewHolder(holder: GameViewHolder?, position: Int) {
         games.getOrNull(position)?.let { holder?.bind(it) }
     }
 
-    override fun getItemCount(): Int {
-        return games.size
-    }
+    override fun getItemCount(): Int = games.size
 
     inner class GameViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_game)) {
         fun bind(gameOverview: GameOverview) = with(itemView) {
@@ -39,7 +37,9 @@ class HotnessAdapter
                     .into(hotness_game_thumbnail)
 
             hotness_game_name.text = gameOverview.name
+            hotness_game_published.text = gameOverview.yearPublished
+
+            setOnClickListener { clickListener(gameOverview) }
         }
     }
-
 }

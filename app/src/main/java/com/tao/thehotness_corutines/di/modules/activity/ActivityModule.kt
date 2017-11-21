@@ -11,5 +11,4 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     fun context(): Context = activity
-
 }
