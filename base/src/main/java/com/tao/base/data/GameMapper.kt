@@ -6,7 +6,11 @@ import com.tao.base.domain.entities.Game
 import com.tao.base.domain.entities.GameOverview
 
 
-fun TGameOverview.toDomain() = GameOverview(gameId, rank, name, thumbnail ?: "", yearPublished ?: "")
+fun TGameOverview.toDomain() = GameOverview(gameId,
+                                            rank,
+                                            name,
+                                            thumbnail ?: "",
+                                            yearPublished ?: "")
 
 fun List<TGameOverview>?.toDomain() : List<GameOverview> {
     if (this == null)
@@ -18,14 +22,14 @@ fun List<TGameOverview>?.toDomain() : List<GameOverview> {
 fun TGame.toDomain() = Game(gameId,
                             rank,
                             name,
-                   thumbnail ?: "",
-                yearPublished ?: "",
-        description ?: "",
-        image ?: "",
-        minPlayers ?: 1,
-        maxPlayers ?: 1,
-        playingTime ?: 0,
-        mechanics ?: emptyList(),
-        isExpansion ?: false,
-        bggRating ?: 0.0,
-        averageRating ?: 0.0)
+                            thumbnail ?: "",
+                            yearPublished ?: "",
+                            description ?: "",
+                            image ?: "",
+                            minPlayers ?: 1,
+                            maxPlayers ?: 1,
+                            playingTime ?: 0,
+                            mechanics ?: emptyList(),
+                            isExpansion ?: false,
+                            bggRating ?: 0.0,
+                            averageRating ?: 0.0)

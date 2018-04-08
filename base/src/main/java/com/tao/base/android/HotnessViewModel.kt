@@ -4,13 +4,12 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.tao.base.data.toDomain
+import com.tao.base.android.utils.AndroidUi
 import com.tao.base.domain.GameRepository
 import com.tao.base.domain.entities.GameOverview
+import com.tao.base.domain.utils.Either
 import kotlinx.coroutines.experimental.channels.Channel
 import kotlinx.coroutines.experimental.channels.actor
-import ru.gildor.coroutines.retrofit.Result
-import javax.inject.Inject
 
 
 class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
@@ -23,11 +22,11 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
     val loading: LiveData<Boolean> = mutableLoading
     val errorMessage: LiveData<String> = mutableErrorMessage
 
-    private val actor = actor<UiAction>(Android, Channel.CONFLATED) {
+    private val actor = actor<UiAction>(AndroidUi, Channel.CONFLATED) {
         for (action in this) {
             when (action) {
-                FetchHotness -> { fetchHotness() }
-                is FetchGameDetails -> { fetchGameDetails(action.gameId) }
+                FetchHotness -> fetchHotness()
+                is FetchGameDetails -> fetchGameDetails(action.gameId)
             }
         }
     }
@@ -36,28 +35,28 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
 
     private suspend fun fetchHotness() {
         mutableLoading.value = true
-        val result = gameRepo.getHotness()
+        val maybeHotness = gameRepo.getHotness()
         mutableLoading.value = false
 
-        when (result) {
-            is Result.Ok -> {
+        when (maybeHotness) {
+            is Either.Right -> {
                 mutableErrorMessage.value = ""
-                mutableHotness.value = result.value.toDomain()
+                mutableHotness.value = maybeHotness.value
             }
-            is Result.Error -> mutableErrorMessage.value = result.exception.localizedMessage
-            is Result.Exception -> mutableErrorMessage.value = result.exception.localizedMessage
+            is Either.Left -> {
+                mutableErrorMessage.value = maybeHotness.value.localizedMessage ?: "Unknown Error"
+            }
         }
     }
 
     private suspend fun fetchGameDetails(gameId: Long) {
         mutableLoading.value = true
-        val result = gameRepo.getGameDetails(gameId)
+        val maybeGame = gameRepo.getGameDetails(gameId)
         mutableLoading.value = false
 
-        when (result) {
-            is Result.Ok -> Log.i("HotnessViewModel", "GameDetails: ${result.value.toDomain()}")
-            is Result.Error -> mutableErrorMessage.value = result.exception.localizedMessage
-            is Result.Exception -> mutableErrorMessage.value = result.exception.localizedMessage
+        when (maybeGame) {
+            is Either.Right -> Log.i("HotnessViewModel", "GameDetails: ${maybeGame.value}")
+            is Either.Left -> mutableErrorMessage.value = maybeGame.value.localizedMessage ?: "Unknown Error"
         }
     }
 

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.tao.base.R
 import com.tao.base.android.*
+import com.tao.base.android.utils.appComponent
 import com.tao.base.di.ActivityComponent
 import com.tao.base.di.modules.activity.ActivityModule
 import kotlinx.android.synthetic.main.activity_hotness.*
@@ -35,13 +36,14 @@ class HotnessActivity : AppCompatActivity() {
         setupListeners()
         observeChanges()
 
-        //if (!isChangingConfigurations)
-            viewModel.action(FetchHotness)
+        viewModel.action(FetchHotness)
     }
 
     private fun initGui() {
         hotness_recycler_view.layoutManager = LinearLayoutManager(this)
-        hotness_recycler_view.adapter = adapter.apply { clickListener = { viewModel.action(FetchGameDetails(it.gameId)) } }
+        hotness_recycler_view.adapter = adapter.apply {
+            clickListener = { viewModel.action(FetchGameDetails(it.gameId)) }
+        }
     }
 
     private fun setupListeners() {

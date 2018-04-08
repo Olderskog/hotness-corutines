@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tao.base.R
+import com.tao.base.android.utils.inflate
 import com.tao.base.di.ActivityScope
 import com.tao.base.domain.entities.GameOverview
 import kotlinx.android.synthetic.main.list_item_game.view.*
@@ -24,8 +25,8 @@ class HotnessAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder = GameViewHolder(parent)
 
-    override fun onBindViewHolder(holder: GameViewHolder?, position: Int) {
-        games.getOrNull(position)?.let { holder?.bind(it) }
+    override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
+        games.getOrNull(position)?.let { holder.bind(it) }
     }
 
     override fun getItemCount(): Int = games.size
