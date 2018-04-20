@@ -1,13 +1,19 @@
 package com.tao.base.data
 
+import com.tao.base.data.entities.TExpansion
 import com.tao.base.data.entities.TGame
 import com.tao.base.data.entities.TGameOverview
+import com.tao.base.domain.entities.Expansion
 import com.tao.base.domain.entities.Game
 import com.tao.base.domain.entities.GameOverview
 
 
+fun TExpansion.toDomain() = Expansion(gameId, name)
+
+fun List<TExpansion>.toDomainExpansion() = this.map { it.toDomain() }
+
 fun TGameOverview.toDomain() = GameOverview(gameId,
-                                            rank,
+                                            rank ?: -1,
                                             name,
                                             thumbnail ?: "",
                                             yearPublished ?: "")
@@ -20,7 +26,7 @@ fun List<TGameOverview>?.toDomain() : List<GameOverview> {
 }
 
 fun TGame.toDomain() = Game(gameId,
-                            rank,
+                            rank ?: -1,
                             name,
                             thumbnail ?: "",
                             yearPublished ?: "",
@@ -32,4 +38,5 @@ fun TGame.toDomain() = Game(gameId,
                             mechanics ?: emptyList(),
                             isExpansion ?: false,
                             bggRating ?: 0.0,
-                            averageRating ?: 0.0)
+                            averageRating ?: 0.0,
+                            expansions?.toDomainExpansion() ?: emptyList())

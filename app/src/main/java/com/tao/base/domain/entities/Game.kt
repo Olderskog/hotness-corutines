@@ -20,4 +20,5 @@ data class Game(val gameId: Long,
                 val mechanics: List<String>,
                 val isExpansion: Boolean,
                 val bggRating: Double,
-                val averageRating: Double)
+                val averageRating: Double,
+                val expansions: List<Expansion>? = emptyList())

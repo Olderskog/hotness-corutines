@@ -2,6 +2,7 @@ package com.tao.base.android
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import android.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.tao.base.R
 import com.tao.base.android.utils.inflate

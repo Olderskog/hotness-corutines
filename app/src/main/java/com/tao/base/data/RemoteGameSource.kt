@@ -1,6 +1,7 @@
 package com.tao.base.data
 
 import com.tao.base.data.utils.retryNetwork
+import com.tao.base.domain.entities.Expansion
 import com.tao.base.domain.entities.Game
 import com.tao.base.domain.entities.GameOverview
 import com.tao.base.domain.utils.Either
@@ -35,6 +36,18 @@ class RemoteGameSource
             is Result.Ok -> Either.Right(response.value.toDomain())
             is Result.Error -> Either.Left(response.exception)
             is Result.Exception -> Either.Left(response.exception)
+        }
+    }
+
+    suspend fun fetchExpansions(expansions: List<Expansion>) : List<Either<Throwable, Game>> /*Either<Throwable, List<Expansion>>*/ {
+        val response = expansions.map { retryNetwork { service.getDetails(it.gameId).awaitResult() } }
+
+        return response.map { result ->
+            when (result) {
+                is Result.Ok -> Either.Right(result.value.toDomain())
+                is Result.Error -> Either.Left(result.exception)
+                is Result.Exception -> Either.Left(result.exception)
+            }
         }
     }
 }

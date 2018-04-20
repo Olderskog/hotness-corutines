@@ -4,11 +4,13 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.tao.base.R
-import com.tao.base.android.*
+import com.tao.base.android.FetchHotness
+import com.tao.base.android.HotnessAdapter
+import com.tao.base.android.HotnessViewModel
+import com.tao.base.android.HotnessViewModelFactory
 import com.tao.base.android.utils.appComponent
 import com.tao.base.di.ActivityComponent
 import com.tao.base.di.modules.activity.ActivityModule
@@ -16,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_hotness.*
 import javax.inject.Inject
 
 
-class HotnessActivity : AppCompatActivity() {
+class HotnessActivity : BaseActivity() {
 
     private val component: ActivityComponent by lazy { appComponent()
                                                 .newActivityComponent(ActivityModule(this)) }
@@ -40,9 +42,13 @@ class HotnessActivity : AppCompatActivity() {
     }
 
     private fun initGui() {
+        supportActionBar?.title = "Top 100"
+
         hotness_recycler_view.layoutManager = LinearLayoutManager(this)
         hotness_recycler_view.adapter = adapter.apply {
-            clickListener = { viewModel.action(FetchGameDetails(it.gameId)) }
+            clickListener = {
+                startActivity(DetailsActivity.launchIntent(this@HotnessActivity, it.gameId))
+            }
         }
     }
 
