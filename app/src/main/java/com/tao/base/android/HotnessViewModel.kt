@@ -29,7 +29,7 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
     val loadingExpansions: LiveData<Boolean> = mutableLoadingExpansions
     val errorMessage: LiveData<String> = mutableErrorMessage
 
-    private val actor = actor<UiAction>(CommonPool, Channel.UNLIMITED) {
+    private val perform = actor<UiAction>(CommonPool, Channel.UNLIMITED) {
         for (action in this) {
             Log.i("HotnessViewModel", "Performing action: $action")
             when (action) {
@@ -40,7 +40,7 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
         }
     }
 
-    fun action(action: UiAction) = actor.offer(action)
+    fun action(action: UiAction) = perform.offer(action)
 
     private suspend fun fetchHotness() {
         mutableLoading.value = true

@@ -1,8 +1,8 @@
 package com.tao.base
 
-import com.tao.thehotness_corutines.data.entities.TGameOverview
-import com.tao.thehotness_corutines.data.toDomain
-import com.tao.thehotness_corutines.domain.entities.GameOverview
+import com.tao.base.data.entities.TGameOverview
+import com.tao.base.data.toDomain
+import com.tao.base.domain.entities.GameOverview
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.given

@@ -1,7 +1,5 @@
 package com.tao.base.di.modules.singleton
 
-import android.content.Context
-import com.readystatesoftware.chuck.ChuckInterceptor
 import com.squareup.moshi.Moshi
 import com.tao.base.BuildConfig
 import com.tao.base.data.BGGService
@@ -33,11 +31,13 @@ object NetworkModule {
         }
     }
 
+    /*
     @JvmStatic @Provides @Chuck
     fun chuckInterceptor(@AppContext context: Context) : Interceptor {
         return ChuckInterceptor(context)
                 .showNotification(false)
     }
+    */
 
     @JvmStatic @Provides
     fun headerInterceptor(): Interceptor {
@@ -53,12 +53,12 @@ object NetworkModule {
 
     @JvmStatic @Provides @Singleton
     fun httpClient(loggingInterceptor: HttpLoggingInterceptor,
-                   headerInterceptor: Interceptor,
-                   @Chuck chuckInterceptor: Interceptor): OkHttpClient {
+                   headerInterceptor: Interceptor/*,
+                   @Chuck chuckInterceptor: Interceptor*/): OkHttpClient {
         return OkHttpClient.Builder()
                             .addInterceptor(loggingInterceptor)
                             .addInterceptor(headerInterceptor)
-                            .addInterceptor(chuckInterceptor)
+                            //.addInterceptor(chuckInterceptor)
                             .connectTimeout(5, TimeUnit.SECONDS)
                             .readTimeout(5, TimeUnit.SECONDS)
                             .build()
