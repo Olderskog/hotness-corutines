@@ -2,9 +2,6 @@ package com.tao.base.android.utils
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import kotlinx.coroutines.experimental.delay
-import ru.gildor.coroutines.retrofit.Result
 import kotlin.coroutines.experimental.AbstractCoroutineContextElement
 import kotlin.coroutines.experimental.Continuation
 import kotlin.coroutines.experimental.ContinuationInterceptor

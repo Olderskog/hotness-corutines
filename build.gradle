@@ -2,8 +2,10 @@
 
 buildscript {
     ext {
-        kotlin_version = '1.2.31'
+        kotlin_version = '1.2.41'
         anko_version = '0.10.1'
+
+        supportLibVersion = '27.1.1'
     }
 
     repositories {
