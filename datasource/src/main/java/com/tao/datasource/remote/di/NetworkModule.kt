@@ -18,19 +18,6 @@ import javax.inject.Singleton
 @Module
 object NetworkModule {
 
-    @JvmStatic @Provides @Singleton
-    fun moshi(): Moshi = Moshi.Builder().build()
-
-    @JvmStatic @Provides
-    fun loggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            level = when {
-                BuildConfig.DEBUG -> HttpLoggingInterceptor.Level.BODY
-                else              -> HttpLoggingInterceptor.Level.NONE
-            }
-        }
-    }
-
     /*
     @JvmStatic @Provides @Chuck
     fun chuckInterceptor(@AppContext context: Context) : Interceptor {
@@ -39,42 +26,56 @@ object NetworkModule {
     }
     */
 
-    @JvmStatic @Provides
-    fun headerInterceptor(): Interceptor {
+    @JvmStatic
+    private fun loggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = when {
+                BuildConfig.DEBUG -> HttpLoggingInterceptor.Level.BODY
+                else              -> HttpLoggingInterceptor.Level.NONE
+            }
+        }
+    }
+
+    @JvmStatic
+    private fun headerInterceptor(): Interceptor {
         return Interceptor { chain ->
             val request = chain.request()
             val modifiedRequest = request.newBuilder()
-                                            .header("Content-Type", "application/json;charset=UTF-8")
-                                            .build()
+                    .header("Content-Type", "application/json;charset=UTF-8")
+                    .build()
 
             chain.proceed(modifiedRequest)
         }
     }
 
-    @JvmStatic @Provides @Singleton
-    fun httpClient(loggingInterceptor: HttpLoggingInterceptor,
-                   headerInterceptor: Interceptor/*,
-                   @Chuck chuckInterceptor: Interceptor*/): OkHttpClient {
+    @JvmStatic
+    private fun httpClient(/* @Chuck chuckInterceptor: Interceptor */): OkHttpClient {
         return OkHttpClient.Builder()
-                            .addInterceptor(loggingInterceptor)
-                            .addInterceptor(headerInterceptor)
-                            //.addInterceptor(chuckInterceptor)
-                            .connectTimeout(5, TimeUnit.SECONDS)
-                            .readTimeout(5, TimeUnit.SECONDS)
-                            .build()
-    }
-
-    @JvmStatic @Provides @Singleton
-    fun retrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
-        return Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl("https://bgg-json.azurewebsites.net")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addInterceptor(loggingInterceptor())
+                .addInterceptor(headerInterceptor())
+                //.addInterceptor(chuckInterceptor)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
                 .build()
     }
 
+    @JvmStatic
+    private fun retrofit(): Retrofit {
+        return Retrofit.Builder()
+                .client(httpClient())
+                .baseUrl("https://bgg-json.azurewebsites.net")
+                .addConverterFactory(MoshiConverterFactory.create(NetworkModule.moshi()))
+                .build()
+    }
+
+
+    /* PROVIDERS */
+
     @JvmStatic @Provides @Singleton
-    fun service(retrofit: Retrofit): BGGService = retrofit.create(BGGService::class.java)
+    fun moshi(): Moshi = Moshi.Builder().build()
+
+    @JvmStatic @Provides @Singleton
+    fun service(): BGGService = retrofit().create(BGGService::class.java)
 
 }
 

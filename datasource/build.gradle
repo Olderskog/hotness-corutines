@@ -12,8 +12,6 @@ kotlin {
 android {
     compileSdkVersion 27
 
-
-
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 27
@@ -41,7 +39,7 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.15'
 
     // OkHttp and Retrofit
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     implementation "com.squareup.retrofit2:retrofit:2.3.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.3.0"
