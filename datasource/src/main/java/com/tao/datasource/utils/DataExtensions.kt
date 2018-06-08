@@ -1,4 +1,4 @@
-package com.tao.base.data.utils
+package com.tao.datasource.utils
 
 import android.util.Log
 import kotlinx.coroutines.experimental.delay

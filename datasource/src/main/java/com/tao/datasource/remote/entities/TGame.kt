@@ -1,4 +1,4 @@
-package com.tao.base.data.entities
+package com.tao.datasource.remote.entities
 
 open class TExpansion(val gameId: Long,
                       val name: String)

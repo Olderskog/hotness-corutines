@@ -1,10 +1,11 @@
 package com.tao.base.data
 
-import com.tao.base.data.utils.retryNetwork
 import com.tao.base.domain.entities.Expansion
 import com.tao.base.domain.entities.Game
 import com.tao.base.domain.entities.GameOverview
 import com.tao.base.domain.utils.Either
+import com.tao.datasource.remote.BGGService
+import com.tao.datasource.utils.retryNetwork
 import ru.gildor.coroutines.retrofit.Result
 import ru.gildor.coroutines.retrofit.awaitResult
 import javax.inject.Inject

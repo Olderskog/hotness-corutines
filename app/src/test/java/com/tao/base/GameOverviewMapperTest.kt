@@ -13,7 +13,7 @@ import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
 
 @RunWith(JUnitPlatform::class)
-class GameOverviewMapperTest : Spek({
+class GameOverviewMapperTest : Spek( {
 
     val nullTGameOverViewLit: List<TGameOverview>? = null
 
@@ -87,4 +87,4 @@ class GameOverviewMapperTest : Spek({
 
     }
 
-})
+} )

@@ -1,10 +1,10 @@
-package com.tao.base.di.modules.singleton
+package com.tao.datasource.remote.di
 
 import com.squareup.moshi.Moshi
-import com.tao.base.BuildConfig
-import com.tao.base.data.BGGService
 import dagger.Module
 import dagger.Provides
+import glt.com.datasource.BuildConfig
+import com.tao.datasource.remote.BGGService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,7 +15,7 @@ import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
-@Module(includes = [(AppModule::class)])
+@Module
 object NetworkModule {
 
     @JvmStatic @Provides @Singleton
@@ -26,7 +26,7 @@ object NetworkModule {
         return HttpLoggingInterceptor().apply {
             level = when {
                 BuildConfig.DEBUG -> HttpLoggingInterceptor.Level.BODY
-                else -> HttpLoggingInterceptor.Level.NONE
+                else              -> HttpLoggingInterceptor.Level.NONE
             }
         }
     }
