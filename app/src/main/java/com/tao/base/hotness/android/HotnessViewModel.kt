@@ -1,14 +1,14 @@
-package com.tao.base.android
+package com.tao.base.hotness.android
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.tao.base.android.utils.AndroidUi
-import com.tao.base.domain.GameRepository
-import com.tao.base.domain.entities.Game
-import com.tao.base.domain.entities.GameOverview
-import com.tao.base.domain.utils.Either
+import com.tao.base.base.utils.AndroidUi
+import com.tao.base.hotness.domain.GameRepository
+import com.tao.base.hotness.domain.entities.Game
+import com.tao.base.hotness.domain.entities.GameOverview
+import com.tao.base.hotness.domain.utils.Either
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.channels.Channel

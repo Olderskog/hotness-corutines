@@ -1,7 +1,7 @@
 package com.tao.base
 
-import com.tao.base.data.toDomain
-import com.tao.base.domain.entities.GameOverview
+import com.tao.base.hotness.data.toDomain
+import com.tao.base.hotness.domain.entities.GameOverview
 import com.tao.datasource.remote.entities.TGameOverview
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context

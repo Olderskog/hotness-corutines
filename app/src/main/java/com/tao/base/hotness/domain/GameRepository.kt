@@ -1,7 +1,7 @@
-package com.tao.base.domain
+package com.tao.base.hotness.domain
 
-import com.tao.base.data.RemoteGameSource
-import com.tao.base.domain.entities.Expansion
+import com.tao.base.hotness.data.RemoteGameSource
+import com.tao.base.hotness.domain.entities.Expansion
 import javax.inject.Inject
 
 

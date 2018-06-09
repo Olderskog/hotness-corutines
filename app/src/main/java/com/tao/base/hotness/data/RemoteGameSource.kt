@@ -1,9 +1,9 @@
-package com.tao.base.data
+package com.tao.base.hotness.data
 
-import com.tao.base.domain.entities.Expansion
-import com.tao.base.domain.entities.Game
-import com.tao.base.domain.entities.GameOverview
-import com.tao.base.domain.utils.Either
+import com.tao.base.hotness.domain.entities.Expansion
+import com.tao.base.hotness.domain.entities.Game
+import com.tao.base.hotness.domain.entities.GameOverview
+import com.tao.base.hotness.domain.utils.Either
 import com.tao.datasource.remote.BGGService
 import com.tao.datasource.utils.retryNetwork
 import ru.gildor.coroutines.retrofit.Result

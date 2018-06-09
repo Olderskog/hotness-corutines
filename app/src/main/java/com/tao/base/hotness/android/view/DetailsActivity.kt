@@ -1,4 +1,4 @@
-package com.tao.base.android.view
+package com.tao.base.hotness.android.view
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
@@ -22,11 +22,11 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.tao.base.R
-import com.tao.base.android.*
-import com.tao.base.android.utils.appComponent
+import com.tao.base.hotness.android.*
+import com.tao.base.base.utils.appComponent
 import com.tao.base.di.ActivityComponent
 import com.tao.base.di.modules.activity.ActivityModule
-import com.tao.base.domain.entities.Game
+import com.tao.base.hotness.domain.entities.Game
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch

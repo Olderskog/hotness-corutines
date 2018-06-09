@@ -1,7 +1,7 @@
 package com.tao.base.di.modules.singleton
 
 import android.content.Context
-import com.tao.base.android.BggApplication
+import com.tao.base.base.BggApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier

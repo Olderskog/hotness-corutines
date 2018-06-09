@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
-        android:name="com.tao.base.android.BggApplication"
+        android:name="com.tao.base.base.BggApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.tao.base.android.view.HotnessActivity"
+            android:name="com.tao.base.hotness.android.view.HotnessActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -29,7 +29,7 @@
                 android:name="default-url"
                 android:value="https://www.thehotness.com/index.html" />
         </activity>
-        <activity android:name="com.tao.base.android.view.DetailsActivity"/>
+        <activity android:name="com.tao.base.hotness.android.view.DetailsActivity"/>
 
     </application>
 </manifest>

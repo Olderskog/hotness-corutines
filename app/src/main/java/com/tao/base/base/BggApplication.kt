@@ -1,4 +1,4 @@
-package com.tao.base.android
+package com.tao.base.base
 
 import android.app.Application
 import android.os.StrictMode

@@ -1,8 +1,8 @@
-package com.tao.base.data
+package com.tao.base.hotness.data
 
-import com.tao.base.domain.entities.Expansion
-import com.tao.base.domain.entities.Game
-import com.tao.base.domain.entities.GameOverview
+import com.tao.base.hotness.domain.entities.Expansion
+import com.tao.base.hotness.domain.entities.Game
+import com.tao.base.hotness.domain.entities.GameOverview
 import com.tao.datasource.remote.entities.TExpansion
 import com.tao.datasource.remote.entities.TGame
 import com.tao.datasource.remote.entities.TGameOverview

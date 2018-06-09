@@ -1,4 +1,4 @@
-package com.tao.base.domain.utils
+package com.tao.base.hotness.domain.utils
 
 /**
  * Really simple Either implementation

@@ -1,4 +1,4 @@
-package com.tao.base.android.view
+package com.tao.base.hotness.android.view
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
@@ -7,11 +7,11 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.tao.base.R
-import com.tao.base.android.FetchHotness
-import com.tao.base.android.HotnessAdapter
-import com.tao.base.android.HotnessViewModel
-import com.tao.base.android.HotnessViewModelFactory
-import com.tao.base.android.utils.appComponent
+import com.tao.base.hotness.android.FetchHotness
+import com.tao.base.hotness.android.HotnessAdapter
+import com.tao.base.hotness.android.HotnessViewModel
+import com.tao.base.hotness.android.HotnessViewModelFactory
+import com.tao.base.base.utils.appComponent
 import com.tao.base.di.ActivityComponent
 import com.tao.base.di.modules.activity.ActivityModule
 import kotlinx.android.synthetic.main.activity_hotness.*

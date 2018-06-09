@@ -1,11 +1,11 @@
-package com.tao.base.android.view
+package com.tao.base.hotness.android.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
-import com.tao.base.android.utils.BundleService
-import com.tao.base.android.utils.Bundler
+import com.tao.base.base.utils.BundleService
+import com.tao.base.base.utils.Bundler
 
 
 @SuppressLint("Registered")

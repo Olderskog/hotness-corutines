@@ -1,4 +1,4 @@
-package com.tao.base.domain.entities
+package com.tao.base.hotness.domain.entities
 
 
 data class GameOverview(val gameId: Long,

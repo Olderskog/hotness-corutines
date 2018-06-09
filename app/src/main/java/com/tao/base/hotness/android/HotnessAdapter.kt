@@ -1,13 +1,12 @@
-package com.tao.base.android
+package com.tao.base.hotness.android
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.tao.base.R
-import com.tao.base.android.utils.inflate
+import com.tao.base.base.utils.inflate
 import com.tao.base.di.ActivityScope
-import com.tao.base.domain.entities.GameOverview
+import com.tao.base.hotness.domain.entities.GameOverview
 import kotlinx.android.synthetic.main.list_item_game.view.*
 import javax.inject.Inject
 
