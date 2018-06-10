@@ -1,7 +1,12 @@
 package com.tao.base.base.utils
 
 import android.animation.ObjectAnimator
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.Drawable
 import android.support.annotation.LayoutRes
+import android.support.design.chip.Chip
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,4 +42,14 @@ fun TextView.collapse(numLines: Int, duration: Long = 200L) {
     } catch (e: Exception) {
         Log.e("TextviewExt", "Collapsing failed with error: ", e)
     }
+}
+
+fun Drawable.tint(color: Int) {
+    colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+}
+
+fun Chip.tint(colorId: Int) {
+    val compat = DrawableCompat.wrap(background)
+    compat.setTint(colorId)
+    this.background = compat
 }

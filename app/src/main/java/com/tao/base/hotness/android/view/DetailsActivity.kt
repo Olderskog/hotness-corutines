@@ -8,12 +8,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.design.chip.Chip
 import android.support.v7.graphics.Palette
-import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -22,10 +22,11 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.tao.base.R
-import com.tao.base.hotness.android.*
 import com.tao.base.base.utils.appComponent
+import com.tao.base.base.utils.tint
 import com.tao.base.di.ActivityComponent
 import com.tao.base.di.modules.activity.ActivityModule
+import com.tao.base.hotness.android.*
 import com.tao.base.hotness.domain.entities.Game
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.coroutines.experimental.Job
@@ -147,14 +148,16 @@ class DetailsActivity : BaseActivity() {
                         imageJob = launch {
                             Palette.from(resource)
                                     .generate { palette ->
-                                        val swatch = palette.dominantSwatch ?: return@generate
+                                        val swatchDominant = palette.dominantSwatch ?: return@generate
+                                        val swatchMuted = palette.mutedSwatch
 
-                                        details_header_background.setBackgroundColor(swatch.rgb)
-                                        supportActionBar?.setBackgroundDrawable(ColorDrawable(swatch.rgb))
-                                        details_game_title.setTextColor(swatch.titleTextColor)
+                                        details_header_background.setBackgroundColor(swatchDominant.rgb)
+                                        supportActionBar?.setBackgroundDrawable(ColorDrawable(swatchDominant.rgb))
+                                        details_game_title.setTextColor(swatchDominant.titleTextColor)
 
-                                        //details_rating_star.tint(swatch.titleTextColor)
-                                        //details_rating_star.visibility = View.GONE
+                                        displayRating(game, swatchMuted)
+                                        displayTime(game, swatchMuted)
+                                        displayPlayers(game, swatchMuted)
                                     }
                         }
 
@@ -170,10 +173,58 @@ class DetailsActivity : BaseActivity() {
             game.name
     }
 
-    private fun AppCompatImageView.tint(colorId: Int) {
-        val compat = DrawableCompat.wrap(drawable)
-        compat.setTint(colorId)
-        this.background = compat
+    private fun displayRating(game: Game, swatch: Palette.Swatch?) {
+        if (swatch == null) {
+            details_game_rating_chip.visibility = View.GONE
+            return
+        }
+
+        details_game_rating_chip?.
+            setup("%.1f".format(game.averageRating), swatch)
+
+    }
+
+    private fun displayTime(game: Game, swatch: Palette.Swatch?) {
+        if (swatch == null) {
+            details_game_time_chip.visibility = View.GONE
+            return
+        }
+
+        if (game.playingTime != 0)
+            details_game_time_chip?.
+                setup("%d".format(game.playingTime), swatch)
+        else
+            details_game_time_chip?.
+                    setup("NA", swatch)
+    }
+
+    private fun displayPlayers(game: Game, swatch: Palette.Swatch?) {
+        if (swatch == null) {
+            details_game_players_chip.visibility = View.GONE
+            return
+        }
+
+        if (game.maxPlayers > game.minPlayers)
+        details_game_players_chip?.
+                setup("%d - %d".format(game.minPlayers, game.maxPlayers), swatch)
+        else
+            details_game_players_chip?.
+                    setup("%d".format(game.minPlayers), swatch)
+    }
+
+    private fun Chip.setup(text: String, swatch: Palette.Swatch) {
+        this.tint(swatch.rgb)
+
+        // Set text color
+        chipText = text
+        setTextColor(swatch.bodyTextColor)
+
+        // Set icon color
+        val icon = chipIcon
+        icon?.tint(swatch.titleTextColor)
+        chipIcon = icon
+
+        visibility = View.VISIBLE
     }
 
     companion object {
