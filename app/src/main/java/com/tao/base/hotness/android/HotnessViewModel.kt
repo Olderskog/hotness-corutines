@@ -28,7 +28,6 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
     val game: LiveData<Game?> = mutableGame
     val expansions: LiveData<Game?> = mutableExpansions
     val loading: LiveData<Boolean> = mutableLoading
-    val loadingExpansions: LiveData<Boolean> = mutableLoadingExpansions
     val errorMessage: LiveData<String> = mutableErrorMessage
 
     private val perform = actor<UiAction>(AndroidUi, Channel.UNLIMITED) {

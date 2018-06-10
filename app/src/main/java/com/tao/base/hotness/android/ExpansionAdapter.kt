@@ -54,7 +54,7 @@ class ExpansionAdapter
             setOnClickListener { clickListener(expansion) }
         }
 
-        fun progressDrawable(strokeWidth: Float = 5f,
+        private fun progressDrawable(strokeWidth: Float = 5f,
                              centerRadius: Float = 20f) : CircularProgressDrawable {
             return CircularProgressDrawable(itemView.context).apply {
                 this.strokeWidth = strokeWidth

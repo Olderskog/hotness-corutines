@@ -87,14 +87,17 @@ class DetailsActivity : BaseActivity() {
     }
 
     private fun setupGui() {
-        supportActionBar?.title = ""
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(android.R.color.transparent)))
+        supportActionBar?.apply {
+            title = ""
+            setDisplayHomeAsUpEnabled(true)
+            setBackgroundDrawable(ColorDrawable(getColor(android.R.color.transparent)))
+        }
 
-        details_game_expansions.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        details_game_expansions.adapter = expansionAdapter.apply {
-            clickListener = {
-                startActivity(DetailsActivity.launchIntent(this@DetailsActivity, it.gameId))
+        details_game_expansions.apply {
+            layoutManager = LinearLayoutManager(this@DetailsActivity, LinearLayoutManager.HORIZONTAL, false)
+
+            adapter = expansionAdapter.apply {
+                clickListener = { startActivity(DetailsActivity.launchIntent(this@DetailsActivity, it.gameId)) }
             }
         }
     }
