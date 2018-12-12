@@ -1,6 +1,6 @@
 package com.tao.base.hotness.android
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tao.base.R
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @ActivityScope
 class HotnessAdapter
-    @Inject constructor(): RecyclerView.Adapter<HotnessAdapter.GameViewHolder>() {
+    @Inject constructor(): androidx.recyclerview.widget.RecyclerView.Adapter<HotnessAdapter.GameViewHolder>() {
 
     var games = emptyList<GameOverview>()
         set(value) {
@@ -31,7 +31,7 @@ class HotnessAdapter
 
     override fun getItemCount(): Int = games.size
 
-    inner class GameViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_game)) {
+    inner class GameViewHolder(parent: ViewGroup) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_game)) {
         fun bind(gameOverview: GameOverview) = with(itemView) {
             Glide.with(this)
                     .load(gameOverview.thumbnail)

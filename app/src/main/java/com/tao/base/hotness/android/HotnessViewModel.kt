@@ -1,21 +1,32 @@
 package com.tao.base.hotness.android
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.util.Log
-import com.tao.base.base.utils.AndroidUi
 import com.tao.base.hotness.domain.GameRepository
 import com.tao.base.hotness.domain.entities.Game
 import com.tao.base.hotness.domain.entities.GameOverview
 import com.tao.base.hotness.domain.utils.Either
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.channels.Channel
-import kotlinx.coroutines.experimental.channels.actor
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.actor
+import kotlin.coroutines.CoroutineContext
 
 
-class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
+open class BaseViewModel : CoroutineScope, ViewModel() {
+
+    private val parentJob = Job()
+    override val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.Main
+
+    override fun onCleared() {
+        super.onCleared()
+        parentJob.cancel()
+    }
+}
+
+class HotnessViewModel(private val gameRepo: GameRepository) : BaseViewModel() {
 
     private val mutableHotness = MutableLiveData<List<GameOverview>>().apply { value = emptyList() }
     private val mutableGame = MutableLiveData<Game?>().apply { value = null }
@@ -30,7 +41,7 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
     val loading: LiveData<Boolean> = mutableLoading
     val errorMessage: LiveData<String> = mutableErrorMessage
 
-    private val perform = actor<UiAction>(AndroidUi, Channel.UNLIMITED) {
+    private val perform = actor<UiAction>(Dispatchers.Main, Channel.UNLIMITED) {
         for (action in this) {
             Log.i("HotnessViewModel", "Performing action: $action")
             when (action) {
@@ -45,7 +56,7 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
 
     private suspend fun fetchHotness() {
         mutableLoading.value = true
-        val maybeHotness = async(CommonPool) { gameRepo.getHotness() }.await()
+        val maybeHotness = withContext(Dispatchers.IO) { gameRepo.getHotness() }
         mutableLoading.value = false
 
         when (maybeHotness) {
@@ -61,7 +72,7 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
 
     private suspend fun fetchGameDetails(gameId: Long) {
         mutableLoading.value = true
-        val maybeGame = async(CommonPool) { gameRepo.getGameDetails(gameId) }.await()
+        val maybeGame = withContext(Dispatchers.IO){ gameRepo.getGameDetails(gameId) }
         mutableLoading.value = false
 
         when (maybeGame) {
@@ -72,7 +83,7 @@ class HotnessViewModel(private val gameRepo: GameRepository) : ViewModel() {
 
     private suspend fun fetchExpansionDetails(gameId: Long) {
         mutableLoadingExpansions.value = true
-        val maybeGame = async(CommonPool) { gameRepo.getGameDetails(gameId) }.await()
+        val maybeGame = withContext(Dispatchers.IO) { gameRepo.getGameDetails(gameId) }
         mutableLoadingExpansions.value = false
 
         when (maybeGame) {
