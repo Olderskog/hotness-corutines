@@ -1,10 +1,10 @@
 package com.tao.base.hotness.android.view
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.widget.Toast
 import com.tao.base.R
 import com.tao.base.hotness.android.FetchHotness
@@ -44,7 +44,7 @@ class HotnessActivity : BaseActivity() {
     private fun initGui() {
         supportActionBar?.title = "Top 100"
 
-        hotness_recycler_view.layoutManager = LinearLayoutManager(this)
+        hotness_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         hotness_recycler_view.adapter = adapter.apply {
             clickListener = {
                 startActivity(DetailsActivity.launchIntent(this@HotnessActivity, it.gameId))

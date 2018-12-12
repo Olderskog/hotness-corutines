@@ -1,7 +1,7 @@
 package com.tao.base.hotness.android
 
-import android.support.v4.widget.CircularProgressDrawable
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 class ExpansionAdapter
-    @Inject constructor(): RecyclerView.Adapter<ExpansionAdapter.ExpansionViewHolder>() {
+    @Inject constructor(): androidx.recyclerview.widget.RecyclerView.Adapter<ExpansionAdapter.ExpansionViewHolder>() {
 
     private var expansions = mutableListOf<Game>()
 
@@ -34,7 +34,7 @@ class ExpansionAdapter
         notifyDataSetChanged() // TODO: Replace with DiffUtil
     }
 
-    inner class ExpansionViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_expansion)) {
+    inner class ExpansionViewHolder(parent: ViewGroup) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_expansion)) {
         fun bind(expansion: Game) = with(itemView) {
             val loadingIndicator = progressDrawable()
 
@@ -55,8 +55,8 @@ class ExpansionAdapter
         }
 
         private fun progressDrawable(strokeWidth: Float = 5f,
-                             centerRadius: Float = 20f) : CircularProgressDrawable {
-            return CircularProgressDrawable(itemView.context).apply {
+                             centerRadius: Float = 20f) : androidx.swiperefreshlayout.widget.CircularProgressDrawable {
+            return androidx.swiperefreshlayout.widget.CircularProgressDrawable(itemView.context).apply {
                 this.strokeWidth = strokeWidth
                 this.centerRadius = centerRadius
                 this.start()

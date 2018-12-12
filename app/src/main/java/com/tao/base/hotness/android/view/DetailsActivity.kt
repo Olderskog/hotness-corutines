@@ -1,16 +1,14 @@
 package com.tao.base.hotness.android.view
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.design.chip.Chip
-import android.support.v7.graphics.Palette
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.chip.Chip
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -29,8 +27,8 @@ import com.tao.base.di.modules.activity.ActivityModule
 import com.tao.base.hotness.android.*
 import com.tao.base.hotness.domain.entities.Game
 import kotlinx.android.synthetic.main.activity_details.*
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity() {
@@ -95,7 +93,7 @@ class DetailsActivity : BaseActivity() {
         }
 
         details_game_expansions.apply {
-            layoutManager = LinearLayoutManager(this@DetailsActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@DetailsActivity, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
 
             adapter = expansionAdapter.apply {
                 clickListener = { startActivity(DetailsActivity.launchIntent(this@DetailsActivity, it.gameId)) }
@@ -146,10 +144,13 @@ class DetailsActivity : BaseActivity() {
                             return false
 
                         imageJob = launch {
-                            Palette.from(resource)
+                            androidx.palette.graphics.Palette.from(resource)
                                     .generate { palette ->
+                                        if (palette == null)
+                                            return@generate
+
                                         val swatchDominant = palette.dominantSwatch ?: return@generate
-                                        val swatchMuted = palette.mutedSwatch
+                                        val swatchMuted = palette.mutedSwatch ?: return@generate
 
                                         details_header_background.setBackgroundColor(swatchDominant.rgb)
                                         supportActionBar?.setBackgroundDrawable(ColorDrawable(swatchDominant.rgb))
@@ -173,7 +174,7 @@ class DetailsActivity : BaseActivity() {
             game.name
     }
 
-    private fun displayRating(game: Game, swatch: Palette.Swatch?) {
+    private fun displayRating(game: Game, swatch: androidx.palette.graphics.Palette.Swatch?) {
         if (swatch == null) {
             details_game_rating_chip.visibility = View.GONE
             return
@@ -184,7 +185,7 @@ class DetailsActivity : BaseActivity() {
 
     }
 
-    private fun displayTime(game: Game, swatch: Palette.Swatch?) {
+    private fun displayTime(game: Game, swatch: androidx.palette.graphics.Palette.Swatch?) {
         if (swatch == null) {
             details_game_time_chip.visibility = View.GONE
             return
@@ -198,7 +199,7 @@ class DetailsActivity : BaseActivity() {
                     setup("NA", swatch)
     }
 
-    private fun displayPlayers(game: Game, swatch: Palette.Swatch?) {
+    private fun displayPlayers(game: Game, swatch: androidx.palette.graphics.Palette.Swatch?) {
         if (swatch == null) {
             details_game_players_chip.visibility = View.GONE
             return
@@ -212,7 +213,7 @@ class DetailsActivity : BaseActivity() {
                     setup("%d".format(game.minPlayers), swatch)
     }
 
-    private fun Chip.setup(text: String, swatch: Palette.Swatch) {
+    private fun Chip.setup(text: String, swatch: androidx.palette.graphics.Palette.Swatch) {
         this.tint(swatch.rgb)
 
         // Set text color

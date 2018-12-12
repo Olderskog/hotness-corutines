@@ -4,10 +4,10 @@ import android.animation.ObjectAnimator
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
-import android.support.annotation.LayoutRes
-import android.support.design.chip.Chip
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.LayoutRes
+import com.google.android.material.chip.Chip
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
